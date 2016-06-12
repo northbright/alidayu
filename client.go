@@ -9,17 +9,17 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"regexp"
 	"sort"
 	"strings"
 	"time"
 )
 
 const (
-	HTTP_URL              string = "http://gw.api.taobao.com/router/rest"
-	HTTPS_URL             string = "https://eco.taobao.com/router/rest"
-	ERR_CODE_JSON_PATTERN string = `"err_code":"(?P<err_code>\d*?)"`
-	ERR_CODE_XML_PATTERN  string = `<err_code>(?P<err_code>\d*?)</err_code>`
+	HTTP_URL  string = "http://gw.api.taobao.com/router/rest"
+	HTTPS_URL string = "https://eco.taobao.com/router/rest"
+
+	SUCCESS_TAG_JSON string = `"success":true`
+	SUCCESS_TAG_XML  string = `<success>true</success>`
 )
 
 var (
@@ -111,6 +111,11 @@ func (c *Client) MakeRequestBody(params map[string]string) (body io.Reader, err 
 	// Update Common Params.
 	c.UpdateCommonParams(params)
 
+	// Check "format".
+	if params["format"] != "json" && params["format"] != "xml" {
+		return nil, errors.New(fmt.Sprintf("format error: %v", params["format"]))
+	}
+
 	sign := ""
 	switch params["sign_method"] {
 	case "md5":
@@ -153,34 +158,26 @@ func (c *Client) Post(params map[string]string) (resp *http.Response, err error)
 	return c.Do(req)
 }
 
-func (c *Client) Exec(params map[string]string) (errCode, result string, err error) {
+func (c *Client) Exec(params map[string]string) (success bool, result string, err error) {
 	resp, err := c.Post(params)
 	if err != nil {
-		return "", "", err
+		return false, "", err
 	}
 
 	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", "", err
+		return false, "", err
 	}
 
 	result = string(data)
-	var re *regexp.Regexp
 
 	switch params["format"] {
 	case "json":
-		re = regexp.MustCompile(ERR_CODE_JSON_PATTERN)
+		success = strings.Contains(result, SUCCESS_TAG_JSON)
 	case "xml":
-		re = regexp.MustCompile(ERR_CODE_XML_PATTERN)
-	default:
-		return "", "", errors.New("Format error.")
+		success = strings.Contains(result, SUCCESS_TAG_XML)
 	}
 
-	matches := re.FindStringSubmatch(result)
-	if len(matches) != 2 {
-		return "", "", errors.New("Error code not found.")
-	}
-
-	return matches[1], result, nil
+	return success, result, nil
 }
