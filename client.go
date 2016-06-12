@@ -6,16 +6,20 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
 )
 
 const (
-	HTTP_URL  string = "http://gw.api.taobao.com/router/rest"
-	HTTPS_URL string = "https://eco.taobao.com/router/rest"
+	HTTP_URL              string = "http://gw.api.taobao.com/router/rest"
+	HTTPS_URL             string = "https://eco.taobao.com/router/rest"
+	ERR_CODE_JSON_PATTERN string = `"err_code":"(?P<err_code>\d*?)"`
+	ERR_CODE_XML_PATTERN  string = `<err_code>(?P<err_code>\d*?)</err_code>`
 )
 
 var (
@@ -147,4 +151,36 @@ func (c *Client) Post(params map[string]string) (resp *http.Response, err error)
 
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	return c.Do(req)
+}
+
+func (c *Client) Exec(params map[string]string) (errCode, result string, err error) {
+	resp, err := c.Post(params)
+	if err != nil {
+		return "", "", err
+	}
+
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", "", err
+	}
+
+	result = string(data)
+	var re *regexp.Regexp
+
+	switch params["format"] {
+	case "json":
+		re = regexp.MustCompile(ERR_CODE_JSON_PATTERN)
+	case "xml":
+		re = regexp.MustCompile(ERR_CODE_XML_PATTERN)
+	default:
+		return "", "", errors.New("Format error.")
+	}
+
+	matches := re.FindStringSubmatch(result)
+	if len(matches) != 2 {
+		return "", "", errors.New("Error code not found.")
+	}
+
+	return matches[1], result, nil
 }
