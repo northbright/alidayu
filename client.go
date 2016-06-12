@@ -179,7 +179,7 @@ func (c *Client) Post(params map[string]string) (resp *http.Response, err error)
 //   Params:
 //     params: map that contains parameters of REST API. See official docs to fill the parameters.
 //   Returns:
-//     success: If response of REST API success.
+//     success: If REST API succeeds.
 //     result: Raw response string of REST API.
 func (c *Client) Exec(params map[string]string) (success bool, result string, err error) {
 	resp, err := c.Post(params)
