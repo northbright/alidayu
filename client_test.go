@@ -85,7 +85,7 @@ func ExampleClient_Post() {
 	// Output:
 }
 
-func ExampleCient_Exec() {
+func ExampleClient_Exec() {
 	var (
 		MyAppKey    string = "" // App Key.
 		MyAppSecret string = "" // App Secret.
