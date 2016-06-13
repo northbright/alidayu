@@ -80,7 +80,7 @@ func ExampleClient_Post() {
 
 // Example of Client.Exec()
 func ExampleClient_Exec() {
-	// Create a new client.
+	// Create a new client(创建一个新的Client实例).
 	c := &alidayu.Client{AppKey: "", AppSecret: "", UseHTTPS: false}
 
 	// ---------------------------------------
