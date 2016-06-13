@@ -16,7 +16,6 @@ func ExampleClient_Post() {
 	// ---------------------------------------
 	// Send Verification Code in SMS.
 	// ---------------------------------------
-
 	// Set Parameters.
 	params := map[string]string{}
 	// It'll use default common parameters if you don't set them.
@@ -86,7 +85,6 @@ func ExampleClient_Exec() {
 	// ---------------------------------------
 	// Send Verification Code in SMS.
 	// ---------------------------------------
-
 	// Set Parameters.
 	params := map[string]string{}
 	// It'll use default common parameters if you don't set them.
