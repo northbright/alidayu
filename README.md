@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/northbright/alidayu.svg?branch=master)](https://travis-ci.org/northbright/alidayu)
 
-[Golang](http://golang.org) SDK for [alidayu](http://www.alidayu.com/) APIs.
+[Golang](http://golang.org) SDK for [alidayu(阿里大鱼)](http://www.alidayu.com/) APIs.
 
 #### Documentation
 * [API Reference](https://godoc.org/github.com/northbright/alidayu)
