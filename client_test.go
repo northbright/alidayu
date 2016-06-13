@@ -19,6 +19,10 @@ func ExampleClient_Post() {
 
 	// Set Parameters.
 	params := map[string]string{}
+	// It'll use default common parameters if you don't set them.
+	// params["format"] = "json"
+	// params["v"] = "2.0"
+	// params["sign_method"] = "md5"
 	params["method"] = "alibaba.aliqin.fc.sms.num.send"           // Set method to send SMS.
 	params["sms_type"] = "normal"                                 // Set SMS type.
 	params["sms_free_sign_name"] = ""                             // Set SMS signature.
@@ -85,7 +89,11 @@ func ExampleClient_Exec() {
 
 	// Set Parameters.
 	params := map[string]string{}
-	params["format"] = "json"
+	// It'll use default common parameters if you don't set them.
+	// params["format"] = "json"
+	// params["v"] = "2.0"
+	// params["sign_method"] = "md5"
+	params["format"] = "xml"
 	params["method"] = "alibaba.aliqin.fc.sms.num.send"           // Set method to send SMS.
 	params["extend"] = "123456"                                   // Set callback parameter.
 	params["sms_type"] = "normal"                                 // Set SMS type.
