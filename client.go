@@ -28,7 +28,7 @@ const (
 
 var (
 	// DefCommonParams is default common parameters of alidayu APIs
-	DefCommonParams map[string]string = map[string]string{
+	DefCommonParams = map[string]string{
 		"format":      "json", // Response Format("json" or "xml")
 		"v":           "2.0",  // API version("2.0")
 		"sign_method": "md5",  // Sign method("md5" or "hmac")
