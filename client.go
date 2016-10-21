@@ -3,7 +3,6 @@ package alidayu
 import (
 	"crypto/hmac"
 	"crypto/md5"
-	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -110,14 +109,14 @@ func (c *Client) SignHMAC(params map[string]string) (signature string) {
 // MakeRequestBody makes the HTTP request body by given parameters for each REST API.
 func (c *Client) MakeRequestBody(params map[string]string) (body io.Reader, err error) {
 	if !c.IsValid() {
-		return nil, errors.New("Empty App Key or App Secret.")
+		return nil, fmt.Errorf("Empty App Key or App Secret.")
 	}
 
 	values := url.Values{}
 
 	// Check "method".
 	if _, ok := params["method"]; !ok {
-		return nil, errors.New("No method specified.")
+		return nil, fmt.Errorf("No method specified.")
 	}
 
 	// Update Common Params.
@@ -135,7 +134,7 @@ func (c *Client) MakeRequestBody(params map[string]string) (body io.Reader, err 
 	case "hmac":
 		sign = c.SignHMAC(params)
 	default:
-		return nil, errors.New("Incorrect sign_method.")
+		return nil, fmt.Errorf("Incorrect sign_method.")
 	}
 
 	params["sign"] = sign
