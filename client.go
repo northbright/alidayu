@@ -21,7 +21,7 @@ const (
 
 	// successTagJSON is success tag for JSON in response string.
 	successTagJSON string = `"success":true`
-	// successTagXML is sucess tag for XML in response string
+	// successTagXML is success tag for XML in response string
 	successTagXML string = `<success>true</success>`
 )
 
