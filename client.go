@@ -125,7 +125,7 @@ func (c *Client) MakeRequestBody(params map[string]string) (body io.Reader, err 
 
 	// Check "format".
 	if params["format"] != "json" && params["format"] != "xml" {
-		return nil, errors.New(fmt.Sprintf("format error: %v", params["format"]))
+		return nil, fmt.Errorf("format error: %v", params["format"])
 	}
 
 	sign := ""
