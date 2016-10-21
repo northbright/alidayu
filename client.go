@@ -14,15 +14,15 @@ import (
 )
 
 const (
-	// HTTP_URL is for HTTP REST API URL.
-	HTTP_URL string = "http://gw.api.taobao.com/router/rest"
-	// HTTPS_URL is for HTTPS REST API URL.
-	HTTPS_URL string = "https://eco.taobao.com/router/rest"
+	// httpURL is for HTTP REST API URL.
+	httpURL string = "http://gw.api.taobao.com/router/rest"
+	// httpsURL is for HTTPS REST API URL.
+	httpsURL string = "https://eco.taobao.com/router/rest"
 
-	// SUCCESS_TAG_JSON is success tag for JSON in response string.
-	SUCCESS_TAG_JSON string = `"success":true`
-	// SUCCESS_TAG_XML is sucess tag for XML in response string
-	SUCCESS_TAG_XML string = `<success>true</success>`
+	// successTagJSON is success tag for JSON in response string.
+	successTagJSON string = `"success":true`
+	// successTagXML is sucess tag for XML in response string
+	successTagXML string = `<success>true</success>`
 )
 
 var (
@@ -161,9 +161,9 @@ func (c *Client) Post(params map[string]string) (resp *http.Response, err error)
 
 	urlStr := ""
 	if c.UseHTTPS {
-		urlStr = HTTPS_URL
+		urlStr = httpsURL
 	} else {
-		urlStr = HTTP_URL
+		urlStr = httpURL
 	}
 
 	req, err := http.NewRequest("POST", urlStr, body)
@@ -198,9 +198,9 @@ func (c *Client) Exec(params map[string]string) (success bool, result string, er
 
 	switch params["format"] {
 	case "json":
-		success = strings.Contains(result, SUCCESS_TAG_JSON)
+		success = strings.Contains(result, successTagJSON)
 	case "xml":
-		success = strings.Contains(result, SUCCESS_TAG_XML)
+		success = strings.Contains(result, successTagXML)
 	}
 
 	return success, result, nil
