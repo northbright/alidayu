@@ -71,7 +71,7 @@ func (c *Client) UpdateCommonParams(params map[string]string) {
 // GetSortedQueryStr sorts the keys of parameters and generate sorted query string which can be used to sign(MD5 or HMAC_MD5).
 func GetSortedQueryStr(params map[string]string) (sortedQueryStr string) {
 	keys := []string{}
-	for k, _ := range params {
+	for k := range params {
 		keys = append(keys, k)
 	}
 
