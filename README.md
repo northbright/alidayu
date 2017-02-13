@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/northbright/alidayu.svg?branch=master)](https://travis-ci.org/northbright/alidayu)
 [![Go Report Card](https://goreportcard.com/badge/github.com/northbright/alidayu)](https://goreportcard.com/report/github.com/northbright/alidayu)
 
-alidayu is a [Golang](http://golang.org) SDK for [alidayu(阿里大鱼)](http://www.alidayu.com/) APIs.
+package alidayu is a [Golang](http://golang.org) SDK for [alidayu(阿里大鱼)](http://www.alidayu.com/) APIs.
 
 #### Documentation
 * [API References](https://godoc.org/github.com/northbright/alidayu)
