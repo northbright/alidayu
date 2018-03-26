@@ -6,6 +6,8 @@
 
 package alidayu is a [Golang](http://golang.org) SDK for [alidayu(阿里大鱼)](http://www.alidayu.com/) APIs.
 
+**Update** This package is obsolete because [alidayu(阿里大鱼)](http://www.alidayu.com/) is merged into [aliyun(阿里云)](https://www.aliyun.com). Use package [message](https://github.com/northbright/aliyun/tree/master/message) instead.
+
 #### Documentation
 * [API References](https://godoc.org/github.com/northbright/alidayu)
 
